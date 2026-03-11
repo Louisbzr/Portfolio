@@ -1,17 +1,21 @@
 import React from "react";
 import { Gamepad2, Globe, Cpu } from "lucide-react";
+import { useTheme, T } from "../context/ThemeContext";
 import { portfolioData } from "../mock";
 import { useScrollAnimation, animClass } from "../hooks/useScrollAnimation";
 
 const { about } = portfolioData;
 
 export default function About() {
+  const { isDark } = useTheme();
+  const theme = isDark ? T.dark : T.light;
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: leftRef, isVisible: leftVisible } = useScrollAnimation({ threshold: 0.1 });
   const { ref: rightRef, isVisible: rightVisible } = useScrollAnimation({ threshold: 0.1 });
 
   return (
-    <section id="about" className="py-28 bg-[#0d0d0d] relative">
+    <section id="about" className="py-28 bg-[#0d0d0d] relative"
+      style={{ backgroundColor: theme.bgMain, transition: "background-color 0.3s ease" }}>
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1e1e1e] to-transparent" />
 
       <div className="max-w-6xl mx-auto px-6">

@@ -1,5 +1,6 @@
 import React from "react";
 import { Terminal, Github, Linkedin, Mail, ArrowUp } from "lucide-react";
+import { useTheme, T } from "../context/ThemeContext";
 import { portfolioData } from "../mock";
 
 const { personal } = portfolioData;
@@ -14,6 +15,8 @@ const navLinks = [
 ];
 
 export default function Footer() {
+  const { isDark } = useTheme();
+  const theme = isDark ? T.dark : T.light;
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const handleNavClick = (e, href) => {
@@ -23,7 +26,8 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#080808] border-t border-[#1e1e1e] py-12">
+    <footer className="bg-[#080808] border-t border-[#1e1e1e] py-12"
+      style={{ backgroundColor: theme.bgFoot, transition: "background-color 0.3s ease" }}>
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-3 gap-10 mb-12">
           {/* Brand */}

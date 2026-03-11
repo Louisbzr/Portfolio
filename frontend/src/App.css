@@ -66,3 +66,233 @@ html {
   background: #00ff88;
   color: #0d0d0d;
 }
+
+/* ═══════════════════════════════════════════════════════
+   LIGHT MODE OVERRIDES (.light-mode class on root div)
+   ═══════════════════════════════════════════════════════ */
+
+/* --- Base backgrounds --- */
+.light-mode {
+  background-color: #f5f4ef !important;
+  color: #1a1a1a;
+}
+
+/* Main section backgrounds */
+.light-mode .bg-\[#0d0d0d\]  { background-color: #f5f4ef !important; }
+.light-mode .bg-\[#0a0a0a\]  { background-color: #edecea !important; }
+.light-mode .bg-\[#080808\]  { background-color: #e8e6e0 !important; }
+.light-mode .bg-\[#111\]     { background-color: #ffffff !important; }
+.light-mode .bg-\[#111111\]  { background-color: #ffffff !important; }
+.light-mode .bg-\[#0d0d0d\]\/95 { background-color: rgba(245,244,239,0.95) !important; }
+
+/* Backdrop / transparent dark */
+.light-mode .bg-\[#00ff88\]\/3  { background-color: rgba(0,136,68,0.05) !important; }
+.light-mode .bg-\[#00ff88\]\/5  { background-color: rgba(0,136,68,0.08) !important; }
+.light-mode .bg-\[#00ff88\]\/8  { background-color: rgba(0,136,68,0.10) !important; }
+
+/* --- Accent color (green) --- */
+.light-mode .bg-\[#00ff88\]               { background-color: #008844 !important; }
+.light-mode .text-\[#00ff88\]             { color: #007a3d !important; }
+.light-mode .border-\[#00ff88\]           { border-color: #008844 !important; }
+.light-mode .hover\:bg-\[#00ff88\]:hover  { background-color: #008844 !important; }
+.light-mode .hover\:text-\[#00ff88\]:hover { color: #007a3d !important; }
+.light-mode .hover\:border-\[#00ff88\]:hover { border-color: #008844 !important; }
+.light-mode .focus\:border-\[#00ff88\]:focus { border-color: #008844 !important; }
+.light-mode [style*="color: #00ff88"]     { color: #007a3d !important; }
+.light-mode [style*="borderColor: #00ff88"] { border-color: #008844 !important; }
+
+/* --- Text colors --- */
+.light-mode .text-white          { color: #1a1a1a !important; }
+.light-mode .text-\[#888888\]    { color: #555555 !important; }
+.light-mode .text-\[#666666\]    { color: #444444 !important; }
+.light-mode .text-\[#666\]       { color: #444444 !important; }
+.light-mode .text-\[#888\]       { color: #555555 !important; }
+.light-mode .text-\[#555\]       { color: #777777 !important; }
+.light-mode .text-\[#444\]       { color: #999999 !important; }
+.light-mode .text-\[#444444\]    { color: #888888 !important; }
+.light-mode .text-\[#333\]       { color: #aaaaaa !important; }
+.light-mode .text-\[#cccccc\]    { color: #333333 !important; }
+.light-mode .text-\[#0d0d0d\]   { color: #ffffff !important; }
+
+/* --- Border colors --- */
+.light-mode .border-\[#1e1e1e\]  { border-color: #dddbd4 !important; }
+.light-mode .border-\[#2a2a2a\]  { border-color: #cccccc !important; }
+.light-mode .border-\[#333\]     { border-color: #cccccc !important; }
+.light-mode .border-\[#333333\]  { border-color: #cccccc !important; }
+.light-mode .border-\[#222\]     { border-color: #e0ddd6 !important; }
+.light-mode .border-\[#1a1a1a\]  { border-color: #e0ddd6 !important; }
+.light-mode .via-\[#1e1e1e\]     { --tw-gradient-stops: transparent, #dddbd4, transparent !important; }
+
+/* --- Hover border overrides --- */
+.light-mode .hover\:border-\[#2a2a2a\]:hover { border-color: #bbbbbb !important; }
+.light-mode .hover\:border-\[#333\]:hover    { border-color: #bbbbbb !important; }
+
+/* --- Skill bar background track --- */
+.light-mode .bg-\[#1a1a1a\] { background-color: #e0ddd6 !important; }
+
+/* --- Glow effect on skill bars --- */
+.light-mode [style*="box-shadow: 0 0 8px rgba(0,255,136"] {
+  box-shadow: 0 0 8px rgba(0,136,68,0.4) !important;
+}
+
+/* --- Grid pattern on hero/project --- */
+.light-mode [style*="backgroundImage"][style*="00ff88 1px"] {
+  opacity: 0.06 !important;
+  filter: hue-rotate(0deg) saturate(0.5) !important;
+}
+
+/* --- Glow radial behind hero --- */
+.light-mode [style*="radial-gradient"][style*="#00ff88"] {
+  opacity: 0.06 !important;
+}
+
+/* --- Terminal header in project cards --- */
+.light-mode .bg-\[#111\] { background-color: #f0ede6 !important; }
+
+/* --- Input / textarea backgrounds --- */
+.light-mode .bg-\[#111\].border-\[#1e1e1e\] {
+  background-color: #ffffff !important;
+}
+
+/* --- Custom scrollbar in light mode --- */
+.light-mode ::-webkit-scrollbar-track { background: #f5f4ef; }
+.light-mode ::-webkit-scrollbar-thumb { background: #cccccc; }
+.light-mode ::-webkit-scrollbar-thumb:hover { background: #008844; }
+
+/* --- Selection in light mode --- */
+.light-mode ::selection {
+  background: #008844;
+  color: #ffffff;
+}
+
+/* --- Header backdrop in light mode --- */
+.light-mode header {
+  border-bottom-color: #dddbd4;
+}
+
+/* Smooth theme transition on everything except transforms */
+.light-mode *, *:not(.animate-bounce, .animate-ping, .animate-spin, .animate-pulse) {
+  transition: background-color 0.25s ease, color 0.2s ease, border-color 0.2s ease !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   LIGHT MODE — Applied via :root.light-theme on <html>
+   Uses CSS custom properties for reliable overrides
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  --pm-bg:        #0d0d0d;
+  --pm-bg2:       #0a0a0a;
+  --pm-bg3:       #080808;
+  --pm-surface:   #111111;
+  --pm-accent:    #00ff88;
+  --pm-accent-dk: #00cc6a;
+  --pm-text:      #ffffff;
+  --pm-text2:     #888888;
+  --pm-text3:     #666666;
+  --pm-muted:     #444444;
+  --pm-border:    #1e1e1e;
+  --pm-border2:   #333333;
+  --pm-bar-track: #1a1a1a;
+}
+
+:root.light-theme {
+  --pm-bg:        #f5f4ef;
+  --pm-bg2:       #edecea;
+  --pm-bg3:       #e5e3dc;
+  --pm-surface:   #ffffff;
+  --pm-accent:    #008844;
+  --pm-accent-dk: #006633;
+  --pm-text:      #1a1a1a;
+  --pm-text2:     #555555;
+  --pm-text3:     #444444;
+  --pm-muted:     #888888;
+  --pm-border:    #dddbd4;
+  --pm-border2:   #cccccc;
+  --pm-bar-track: #e0ddd6;
+}
+
+/* Apply vars to the page root */
+.portfolio-root {
+  background-color: var(--pm-bg);
+  color: var(--pm-text);
+  transition: background-color 0.3s ease, color 0.25s ease;
+}
+
+/* Sections */
+.portfolio-root section { transition: background-color 0.3s ease; }
+
+/* ─── Light mode: section backgrounds ─── */
+:root.light-theme .bg-\[\#0d0d0d\]  { background-color: var(--pm-bg)      !important; }
+:root.light-theme .bg-\[\#0a0a0a\]  { background-color: var(--pm-bg2)     !important; }
+:root.light-theme .bg-\[\#080808\]  { background-color: var(--pm-bg3)     !important; }
+:root.light-theme .bg-\[\#111\]     { background-color: var(--pm-surface) !important; }
+:root.light-theme .bg-\[\#111111\]  { background-color: var(--pm-surface) !important; }
+:root.light-theme .bg-\[\#0d0d0d\]\/95 { background-color: rgba(245,244,239,0.95) !important; }
+:root.light-theme .bg-\[\#1a1a1a\]  { background-color: var(--pm-bar-track) !important; }
+
+/* Accent transparent variants */
+:root.light-theme .bg-\[\#00ff88\]\/3  { background-color: rgba(0,136,68,0.05) !important; }
+:root.light-theme .bg-\[\#00ff88\]\/5  { background-color: rgba(0,136,68,0.08) !important; }
+
+/* ─── Accent color ─── */
+:root.light-theme .bg-\[\#00ff88\]                    { background-color: var(--pm-accent)  !important; }
+:root.light-theme .text-\[\#00ff88\]                  { color: var(--pm-accent)              !important; }
+:root.light-theme .border-\[\#00ff88\]                { border-color: var(--pm-accent)       !important; }
+:root.light-theme .hover\:bg-\[\#00ff88\]:hover       { background-color: var(--pm-accent)  !important; }
+:root.light-theme .hover\:text-\[\#00ff88\]:hover     { color: var(--pm-accent)              !important; }
+:root.light-theme .hover\:border-\[\#00ff88\]:hover   { border-color: var(--pm-accent)       !important; }
+:root.light-theme .focus\:border-\[\#00ff88\]:focus   { border-color: var(--pm-accent)       !important; }
+:root.light-theme .from-\[\#00ff88\]                  { --tw-gradient-from: var(--pm-accent) !important; }
+
+/* ─── Text ─── */
+:root.light-theme .text-white         { color: var(--pm-text)  !important; }
+:root.light-theme .text-\[\#888888\]  { color: var(--pm-text2) !important; }
+:root.light-theme .text-\[\#888\]     { color: var(--pm-text2) !important; }
+:root.light-theme .text-\[\#666666\]  { color: var(--pm-text3) !important; }
+:root.light-theme .text-\[\#666\]     { color: var(--pm-text3) !important; }
+:root.light-theme .text-\[\#555\]     { color: #666666 !important; }
+:root.light-theme .text-\[\#444\]     { color: var(--pm-muted) !important; }
+:root.light-theme .text-\[\#444444\]  { color: var(--pm-muted) !important; }
+:root.light-theme .text-\[\#333\]     { color: #aaaaaa !important; }
+:root.light-theme .text-\[\#cccccc\]  { color: #333333 !important; }
+:root.light-theme .text-\[\#0d0d0d\]  { color: #ffffff !important; }
+
+/* ─── Borders ─── */
+:root.light-theme .border-\[\#1e1e1e\]              { border-color: var(--pm-border)  !important; }
+:root.light-theme .border-\[\#2a2a2a\]              { border-color: var(--pm-border2) !important; }
+:root.light-theme .border-\[\#333\]                 { border-color: var(--pm-border2) !important; }
+:root.light-theme .border-\[\#333333\]              { border-color: var(--pm-border2) !important; }
+:root.light-theme .border-\[\#222\]                 { border-color: var(--pm-border)  !important; }
+:root.light-theme .border-\[\#1a1a1a\]              { border-color: var(--pm-border)  !important; }
+:root.light-theme .hover\:border-\[\#333\]:hover    { border-color: #bbbbbb !important; }
+:root.light-theme .hover\:border-\[\#2a2a2a\]:hover { border-color: #bbbbbb !important; }
+
+/* Gradient separator line */
+:root.light-theme .via-\[\#1e1e1e\] {
+  --tw-gradient-via: #dddbd4 !important;
+  --tw-gradient-stops: var(--tw-gradient-from), #dddbd4, var(--tw-gradient-to) !important;
+}
+
+/* ─── Scrollbar ─── */
+:root.light-theme ::-webkit-scrollbar-track { background: #f5f4ef; }
+:root.light-theme ::-webkit-scrollbar-thumb { background: #cccccc; }
+:root.light-theme ::-webkit-scrollbar-thumb:hover { background: #008844; }
+
+/* ─── Selection ─── */
+:root.light-theme ::selection { background: #008844; color: #ffffff; }
+
+/* ─── Smooth transition for all colored props ─── */
+:root.light-theme * {
+  transition-property: background-color, color, border-color;
+  transition-duration: 0.25s;
+  transition-timing-function: ease;
+}
+/* Prevent transition override on animated elements */
+:root.light-theme .animate-bounce,
+:root.light-theme .animate-ping,
+:root.light-theme .animate-spin,
+:root.light-theme .animate-pulse {
+  transition: none !important;
+}

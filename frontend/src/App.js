@@ -8,10 +8,18 @@ import Parcours from "./components/Parcours";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import { ThemeProvider, useTheme, T } from "./context/ThemeContext";
 
-function App() {
+function AppContent() {
+  const { isDark } = useTheme();
+  const theme = isDark ? T.dark : T.light;
+
   return (
-    <div className="bg-[#0d0d0d] min-h-screen">
+    <div
+      data-theme={isDark ? "dark" : "light"}
+      className="portfolio-root min-h-screen"
+      style={{ backgroundColor: theme.bgMain, color: theme.text, transition: "background-color 0.3s ease, color 0.25s ease" }}
+    >
       <Header />
       <main>
         <Hero />
@@ -23,6 +31,14 @@ function App() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 

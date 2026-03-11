@@ -1,5 +1,6 @@
 import React from "react";
 import { GraduationCap, Briefcase, Code2, Trophy, BookOpen } from "lucide-react";
+import { useTheme, T } from "../context/ThemeContext";
 import { portfolioData } from "../mock";
 import { useScrollAnimation, animClass } from "../hooks/useScrollAnimation";
 
@@ -109,10 +110,13 @@ function TimelineItem({ item, index }) {
 }
 
 export default function Parcours() {
+  const { isDark } = useTheme();
+  const theme = isDark ? T.dark : T.light;
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
 
   return (
-    <section id="parcours" className="py-28 bg-[#0d0d0d] relative">
+    <section id="parcours" className="py-28 bg-[#0d0d0d] relative"
+      style={{ backgroundColor: theme.bgMain, transition: "background-color 0.3s ease" }}>
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1e1e1e] to-transparent" />
 
       <div className="max-w-6xl mx-auto px-6">

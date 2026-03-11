@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Code2, Server, Database, Wrench, ChevronRight } from "lucide-react";
+import { useTheme, T } from "../context/ThemeContext";
 import { portfolioData } from "../mock";
 import { useScrollAnimation, animClass } from "../hooks/useScrollAnimation";
 
@@ -57,13 +58,16 @@ function CategoryCard({ cat, activeTab, setActiveTab, baseDelay }) {
 }
 
 export default function Skills() {
+  const { isDark } = useTheme();
+  const theme = isDark ? T.dark : T.light;
   const [activeTab, setActiveTab] = useState("frontend");
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const activeCategory = categories.find((c) => c.key === activeTab);
 
   return (
-    <section id="skills" className="py-28 bg-[#0a0a0a] relative">
+    <section id="skills" className="py-28 bg-[#0a0a0a] relative"
+      style={{ backgroundColor: theme.bgAlt, transition: "background-color 0.3s ease" }}>
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1e1e1e] to-transparent" />
 
       <div className="max-w-6xl mx-auto px-6">

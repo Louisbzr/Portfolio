@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Mail, Github, Linkedin, Send, ChevronRight, Copy, CheckCheck } from "lucide-react";
+import { useTheme, T } from "../context/ThemeContext";
 import { portfolioData } from "../mock";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -18,6 +19,8 @@ const contactLinks = [
 ];
 
 export default function Contact() {
+  const { isDark } = useTheme();
+  const theme = isDark ? T.dark : T.light;
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -54,7 +57,8 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-28 bg-[#0a0a0a] relative">
+    <section id="contact" className="py-28 bg-[#0a0a0a] relative"
+      style={{ backgroundColor: theme.bgAlt, transition: "background-color 0.3s ease" }}>
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1e1e1e] to-transparent" />
       <Toaster />
 

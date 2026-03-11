@@ -7,6 +7,7 @@ import {
   Calendar,
   CheckCircle2,
 } from "lucide-react";
+import { useTheme, T } from "../context/ThemeContext";
 import { portfolioData } from "../mock";
 import { Badge } from "./ui/badge";
 import { useScrollAnimation, animClass } from "../hooks/useScrollAnimation";
@@ -135,10 +136,13 @@ function ProjectCard({ project, idx }) {
 }
 
 export default function Projects() {
+  const { isDark } = useTheme();
+  const theme = isDark ? T.dark : T.light;
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
 
   return (
-    <section id="projects" className="py-28 bg-[#0a0a0a] relative">
+    <section id="projects" className="py-28 bg-[#0a0a0a] relative"
+      style={{ backgroundColor: theme.bgAlt, transition: "background-color 0.3s ease" }}>
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1e1e1e] to-transparent" />
 
       <div className="max-w-6xl mx-auto px-6">

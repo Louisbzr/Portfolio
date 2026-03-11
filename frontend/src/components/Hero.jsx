@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ArrowDown, Github, Linkedin, Mail, ChevronRight } from "lucide-react";
+import { useTheme, T } from "../context/ThemeContext";
 import { portfolioData } from "../mock";
 
 const { personal } = portfolioData;
@@ -42,6 +43,8 @@ function TypewriterText({ texts, speed = 80, pause = 2000 }) {
 }
 
 export default function Hero() {
+  const { isDark } = useTheme();
+  const theme = isDark ? T.dark : T.light;
   const handleScrollTo = (href) => {
     const target = document.querySelector(href);
     if (target) target.scrollIntoView({ behavior: "smooth" });
@@ -51,7 +54,8 @@ export default function Hero() {
     <section
       id="hero"
       className="relative min-h-screen flex items-center justify-start overflow-hidden bg-[#0d0d0d]"
-    >
+    
+      style={{ backgroundColor: theme.bgMain, transition: "background-color 0.3s ease" }}>
       {/* Background grid */}
       <div
         className="absolute inset-0 opacity-[0.04]"
