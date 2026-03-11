@@ -101,3 +101,142 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+user_problem_statement: "Portfolio gamer retro moderne pour Louis, développeur web full stack. Sections: Hero, À propos, Compétences, Parcours (timeline), Projets, Contact. Backend: save contact form to MongoDB."
+
+backend:
+  - task: "POST /api/contact - Save contact message"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Endpoint implemented with EmailStr validation, saves to MongoDB contacts collection"
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: POST /api/contact works perfectly. Valid data returns 201 with proper ContactResponse model. Invalid data (name too short, invalid email, message too short) returns 422 with detailed validation errors. MongoDB integration working."
+
+  - task: "GET /api/contact - List contact messages"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Returns all contact messages sorted by date descending"
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: GET /api/contact works perfectly. Returns array of contacts with proper ContactResponse model. Found 2 existing contacts including newly created test contact. Sorted by date descending as expected."
+
+  - task: "PATCH /api/contact/{id}/read - Mark as read"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "low"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Updates read field to true in MongoDB"
+      - working: true
+        agent: "testing"
+        comment: "✅ TESTED: PATCH /api/contact/{id}/read works perfectly. Valid ID returns 200 with {\"status\": \"ok\"} and updates MongoDB. Invalid ID returns 404 with \"Message not found\" as expected."
+
+frontend:
+  - task: "Hero section with typewriter effect"
+    implemented: true
+    working: true
+    file: "frontend/src/components/Hero.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Typewriter animation, terminal dots, scroll indicator, social links"
+
+  - task: "About section with scroll animation"
+    implemented: true
+    working: true
+    file: "frontend/src/components/About.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "fadeLeft/fadeRight/scaleIn animations on scroll"
+
+  - task: "Skills section with animated bars"
+    implemented: true
+    working: true
+    file: "frontend/src/components/Skills.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Tab navigation, animated skill bars triggered on scroll"
+
+  - task: "Parcours timeline section"
+    implemented: true
+    working: true
+    file: "frontend/src/components/Parcours.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Alternating left/right timeline, 5 entries, icons by type"
+
+  - task: "Projects section"
+    implemented: true
+    working: true
+    file: "frontend/src/components/Projects.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Pokémon Compendium card with demo/github buttons, scroll animation"
+
+  - task: "Contact form with backend integration"
+    implemented: true
+    working: true
+    file: "frontend/src/components/Contact.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "POST to /api/contact, fallback mock if backend unavailable"
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 2
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Contact form with backend integration"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Backend implemented with 3 endpoints: POST/GET /api/contact and PATCH read. Frontend has all sections with scroll animations. Please test backend endpoints and contact form integration."
+  - agent: "testing"
+    message: "✅ BACKEND TESTING COMPLETE: All 6 backend endpoints tested successfully. GET /api/ health check working. POST /api/contact handles valid/invalid data correctly with proper validation. GET /api/contact returns contact list. PATCH /api/contact/{id}/read works for both valid/invalid IDs. MongoDB integration confirmed working. Backend fully functional."

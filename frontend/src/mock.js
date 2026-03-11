@@ -24,6 +24,59 @@ export const portfolioData = {
     ],
   },
 
+  parcours: [
+    {
+      id: 1,
+      year: "2024",
+      type: "project",
+      title: "Pokémon Compendium",
+      organization: "Projet Personnel",
+      description:
+        "Développement d'une encyclopédie Pokémon interactive full stack avec authentification JWT, intégration de la PokéAPI et base de données PostgreSQL via Prisma.",
+      tags: ["React", "Node.js", "PostgreSQL", "Prisma", "JWT"],
+    },
+    {
+      id: 2,
+      year: "2023 – 2024",
+      type: "education",
+      title: "Formation Développeur Web",
+      organization: "Autodidacte & Projets",
+      description:
+        "Apprentissage intensif du développement full stack : JavaScript ES6+, React, Node.js/Express, bases de données relationnelles et outils DevOps modernes.",
+      tags: ["JavaScript", "React", "Node.js", "Express", "SQL"],
+    },
+    {
+      id: 3,
+      year: "2023",
+      type: "learning",
+      title: "Maîtrise du Frontend",
+      organization: "Projets & Pratique",
+      description:
+        "Approfondissement de React, state management, hooks avancés, et intégration d'APIs REST. Construction de plusieurs projets personnels pour consolider les acquis.",
+      tags: ["React", "Hooks", "REST API", "TailwindCSS"],
+    },
+    {
+      id: 4,
+      year: "2022 – 2023",
+      type: "education",
+      title: "Bases du Développement Web",
+      organization: "Autodidacte",
+      description:
+        "Découverte et maîtrise des fondamentaux : HTML5, CSS3, JavaScript vanilla. Création des premiers projets web statiques et dynamiques.",
+      tags: ["HTML", "CSS", "JavaScript", "DOM"],
+    },
+    {
+      id: 5,
+      year: "2022",
+      type: "achievement",
+      title: "Premier Déploiement",
+      organization: "Vercel & Railway",
+      description:
+        "Déploiement du premier projet full stack en production : frontend sur Vercel, backend sur Railway, base de données PostgreSQL managée. Découverte du workflow CI/CD.",
+      tags: ["Vercel", "Railway", "CI/CD", "Git"],
+    },
+  ],
+
   skills: {
     frontend: [
       { name: "HTML", level: 95 },

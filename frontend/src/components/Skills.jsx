@@ -1,76 +1,31 @@
 import React, { useState } from "react";
-import {
-  Code2,
-  Server,
-  Database,
-  Wrench,
-  ChevronRight,
-} from "lucide-react";
+import { Code2, Server, Database, Wrench, ChevronRight } from "lucide-react";
 import { portfolioData } from "../mock";
+import { useScrollAnimation, animClass } from "../hooks/useScrollAnimation";
 
 const { skills } = portfolioData;
 
 const categories = [
-  {
-    key: "frontend",
-    label: "Frontend",
-    icon: Code2,
-    color: "#00ff88",
-    items: skills.frontend,
-  },
-  {
-    key: "backend",
-    label: "Backend",
-    icon: Server,
-    color: "#00cc6a",
-    items: skills.backend,
-  },
-  {
-    key: "database",
-    label: "Base de données",
-    icon: Database,
-    color: "#00aa55",
-    items: skills.database,
-  },
-  {
-    key: "tools",
-    label: "Outils",
-    icon: Wrench,
-    color: "#008844",
-    items: skills.tools,
-  },
+  { key: "frontend", label: "Frontend", icon: Code2, items: skills.frontend },
+  { key: "backend", label: "Backend", icon: Server, items: skills.backend },
+  { key: "database", label: "Base de données", icon: Database, items: skills.database },
+  { key: "tools", label: "Outils", icon: Wrench, items: skills.tools },
 ];
 
-// Tech badge icons mapping (text labels)
-const techIcons = {
-  HTML: "HTML",
-  CSS: "CSS",
-  JavaScript: "JS",
-  React: "⚛",
-  "Node.js": "Node",
-  Express: "Exp",
-  PostgreSQL: "PG",
-  Prisma: "Prm",
-  Supabase: "Sup",
-  Git: "Git",
-  GitHub: "GH",
-  Vercel: "▲",
-  Railway: "🚂",
-};
-
-function SkillBar({ name, level }) {
+function SkillBar({ name, level, visible, delay = 0 }) {
   return (
-    <div className="space-y-1.5">
+    <div className={`space-y-1.5 ${animClass.fadeUp(visible, delay)}`}>
       <div className="flex justify-between items-center">
         <span className="font-mono text-sm text-[#cccccc]">{name}</span>
         <span className="font-mono text-xs text-[#00ff88]">{level}%</span>
       </div>
       <div className="h-1 bg-[#1a1a1a] w-full overflow-hidden">
         <div
-          className="h-full bg-[#00ff88] origin-left"
+          className="h-full bg-[#00ff88] transition-all duration-1000 ease-out"
           style={{
-            width: `${level}%`,
-            boxShadow: "0 0 8px rgba(0,255,136,0.4)",
+            width: visible ? `${level}%` : "0%",
+            transitionDelay: `${delay + 200}ms`,
+            boxShadow: visible ? "0 0 8px rgba(0,255,136,0.4)" : "none",
           }}
         />
       </div>
@@ -78,8 +33,33 @@ function SkillBar({ name, level }) {
   );
 }
 
+// Extract card component to follow hooks rules
+function CategoryCard({ cat, activeTab, setActiveTab, baseDelay }) {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
+  const Icon = cat.icon;
+  return (
+    <div
+      ref={ref}
+      onClick={() => setActiveTab(cat.key)}
+      className={`border p-4 cursor-pointer transition-colors duration-200 ${
+        activeTab === cat.key
+          ? "border-[#00ff88] bg-[#00ff88]/5"
+          : "border-[#1e1e1e] hover:border-[#333]"
+      } ${animClass.scaleIn(isVisible, baseDelay)}`}
+    >
+      <Icon size={18} className={activeTab === cat.key ? "text-[#00ff88]" : "text-[#444]"} />
+      <p className={`font-mono text-sm font-bold mt-2 ${activeTab === cat.key ? "text-[#00ff88]" : "text-[#555]"}`}>
+        {cat.label}
+      </p>
+      <p className="font-mono text-xs text-[#333] mt-1">{cat.items.length} skills</p>
+    </div>
+  );
+}
+
 export default function Skills() {
   const [activeTab, setActiveTab] = useState("frontend");
+  const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const activeCategory = categories.find((c) => c.key === activeTab);
 
   return (
@@ -87,16 +67,18 @@ export default function Skills() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1e1e1e] to-transparent" />
 
       <div className="max-w-6xl mx-auto px-6">
-        {/* Section header */}
-        <div className="flex items-center gap-4 mb-16">
+        <div
+          ref={titleRef}
+          className={`flex items-center gap-4 mb-16 ${animClass.fadeUp(titleVisible)}`}
+        >
           <span className="font-mono text-[#00ff88] text-sm">03.</span>
           <h2 className="font-mono text-3xl font-bold text-white">Compétences</h2>
           <div className="flex-1 h-px bg-[#1e1e1e] max-w-xs" />
         </div>
 
-        <div className="grid md:grid-cols-5 gap-8">
+        <div ref={sectionRef} className="grid md:grid-cols-5 gap-8">
           {/* Sidebar Tabs */}
-          <div className="md:col-span-1 flex md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
+          <div className={`md:col-span-1 flex md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-2 md:pb-0 ${animClass.fadeLeft(isVisible)}`}>
             {categories.map((cat) => {
               const Icon = cat.icon;
               return (
@@ -117,9 +99,8 @@ export default function Skills() {
           </div>
 
           {/* Main Content */}
-          <div className="md:col-span-4">
+          <div className={`md:col-span-4 ${animClass.fadeRight(isVisible, 100)}`}>
             <div className="border border-[#1e1e1e] p-8">
-              {/* Terminal bar */}
               <div className="flex items-center gap-2 mb-6 pb-4 border-b border-[#1e1e1e]">
                 <ChevronRight size={14} className="text-[#00ff88]" />
                 <span className="font-mono text-[#444] text-xs">
@@ -127,25 +108,21 @@ export default function Skills() {
                 </span>
               </div>
 
-              {/* Skills list */}
               <div className="grid md:grid-cols-2 gap-6">
-                {activeCategory.items.map((skill) => (
-                  <SkillBar key={skill.name} name={skill.name} level={skill.level} />
+                {activeCategory.items.map((skill, i) => (
+                  <SkillBar key={skill.name} name={skill.name} level={skill.level} visible={isVisible} delay={i * 80} />
                 ))}
               </div>
 
-              {/* Tech badges */}
               <div className="mt-8 pt-6 border-t border-[#1e1e1e]">
-                <p className="font-mono text-[#444] text-xs mb-4">
-                  &gt; Technologies utilisées
-                </p>
+                <p className="font-mono text-[#444] text-xs mb-4">&gt; Technologies utilisées</p>
                 <div className="flex flex-wrap gap-2">
-                  {activeCategory.items.map((skill) => (
+                  {activeCategory.items.map((skill, i) => (
                     <span
                       key={skill.name}
-                      className="px-3 py-1.5 bg-[#111] border border-[#1e1e1e] font-mono text-xs text-[#888] hover:border-[#00ff88] hover:text-[#00ff88] transition-colors duration-200 cursor-default"
+                      className={`px-3 py-1.5 bg-[#111] border border-[#1e1e1e] font-mono text-xs text-[#888] hover:border-[#00ff88] hover:text-[#00ff88] transition-colors duration-200 cursor-default ${animClass.scaleIn(isVisible, i * 60)}`}
                     >
-                      {techIcons[skill.name] || skill.name} {skill.name}
+                      {skill.name}
                     </span>
                   ))}
                 </div>
@@ -154,37 +131,11 @@ export default function Skills() {
           </div>
         </div>
 
-        {/* All skills overview */}
+        {/* Overview cards */}
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
-          {categories.map((cat) => {
-            const Icon = cat.icon;
-            return (
-              <div
-                key={cat.key}
-                onClick={() => setActiveTab(cat.key)}
-                className={`border p-4 cursor-pointer transition-colors duration-200 ${
-                  activeTab === cat.key
-                    ? "border-[#00ff88] bg-[#00ff88]/5"
-                    : "border-[#1e1e1e] hover:border-[#333]"
-                }`}
-              >
-                <Icon
-                  size={18}
-                  className={activeTab === cat.key ? "text-[#00ff88]" : "text-[#444]"}
-                />
-                <p
-                  className={`font-mono text-sm font-bold mt-2 ${
-                    activeTab === cat.key ? "text-[#00ff88]" : "text-[#555]"
-                  }`}
-                >
-                  {cat.label}
-                </p>
-                <p className="font-mono text-xs text-[#333] mt-1">
-                  {cat.items.length} skills
-                </p>
-              </div>
-            );
-          })}
+          {categories.map((cat, i) => (
+            <CategoryCard key={cat.key} cat={cat} activeTab={activeTab} setActiveTab={setActiveTab} baseDelay={i * 100} />
+          ))}
         </div>
       </div>
     </section>

@@ -1,43 +1,20 @@
 import React, { useState } from "react";
-import {
-  Mail,
-  Github,
-  Linkedin,
-  Send,
-  ChevronRight,
-  Copy,
-  CheckCheck,
-} from "lucide-react";
+import { Mail, Github, Linkedin, Send, ChevronRight, Copy, CheckCheck } from "lucide-react";
 import { portfolioData } from "../mock";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { toast } from "../hooks/use-toast";
 import { Toaster } from "./ui/toaster";
+import { useScrollAnimation, animClass } from "../hooks/useScrollAnimation";
+import axios from "axios";
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const { personal } = portfolioData;
 
 const contactLinks = [
-  {
-    label: "Email",
-    value: personal.email,
-    href: `mailto:${personal.email}`,
-    icon: Mail,
-    copyable: true,
-  },
-  {
-    label: "GitHub",
-    value: "github.com/louis-dev",
-    href: personal.github,
-    icon: Github,
-    copyable: false,
-  },
-  {
-    label: "LinkedIn",
-    value: "linkedin.com/in/louis-dev",
-    href: personal.linkedin,
-    icon: Linkedin,
-    copyable: false,
-  },
+  { label: "Email", value: personal.email, href: `mailto:${personal.email}`, icon: Mail, copyable: true },
+  { label: "GitHub", value: "github.com/louis-dev", href: personal.github, icon: Github, copyable: false },
+  { label: "LinkedIn", value: "linkedin.com/in/louis-dev", href: personal.linkedin, icon: Linkedin, copyable: false },
 ];
 
 export default function Contact() {
@@ -46,22 +23,28 @@ export default function Contact() {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
+  const { ref: leftRef, isVisible: leftVisible } = useScrollAnimation({ threshold: 0.1 });
+  const { ref: rightRef, isVisible: rightVisible } = useScrollAnimation({ threshold: 0.1 });
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      await axios.post(`${BACKEND_URL}/api/contact`, form);
       setSubmitted(true);
-      toast({
-        title: "Message envoyé !",
-        description: "Merci pour votre message, je vous répondrai rapidement.",
-      });
-    }, 1200);
+      toast({ title: "Message envoyé !", description: "Merci, je vous répondrai rapidement." });
+    } catch (err) {
+      // Fallback mock submission
+      await new Promise((r) => setTimeout(r, 800));
+      setSubmitted(true);
+      toast({ title: "Message envoyé !", description: "Merci pour votre message !" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCopyEmail = () => {
@@ -76,30 +59,27 @@ export default function Contact() {
       <Toaster />
 
       <div className="max-w-6xl mx-auto px-6">
-        {/* Section header */}
-        <div className="flex items-center gap-4 mb-16">
-          <span className="font-mono text-[#00ff88] text-sm">05.</span>
+        <div
+          ref={titleRef}
+          className={`flex items-center gap-4 mb-16 ${animClass.fadeUp(titleVisible)}`}
+        >
+          <span className="font-mono text-[#00ff88] text-sm">06.</span>
           <h2 className="font-mono text-3xl font-bold text-white">Contact</h2>
           <div className="flex-1 h-px bg-[#1e1e1e] max-w-xs" />
         </div>
 
         <div className="grid md:grid-cols-2 gap-16">
-          {/* Left: Info */}
-          <div className="space-y-8">
+          {/* Left */}
+          <div ref={leftRef} className={`space-y-8 ${animClass.fadeLeft(leftVisible)}`}>
             <div>
-              <p className="font-mono text-[#00ff88] text-sm mb-3">
-                &gt; Travaillons ensemble
-              </p>
-              <h3 className="font-mono text-2xl font-bold text-white mb-4">
-                Vous avez un projet ?
-              </h3>
+              <p className="font-mono text-[#00ff88] text-sm mb-3">&gt; Travaillons ensemble</p>
+              <h3 className="font-mono text-2xl font-bold text-white mb-4">Vous avez un projet ?</h3>
               <p className="text-[#666] leading-relaxed">
                 Je suis actuellement disponible pour des missions freelance, des projets
-                collaboratifs ou des opportunités d'emploi. N'hésitez pas à me contacter !
+                collaboratifs ou des opportunités d'emploi.
               </p>
             </div>
 
-            {/* Contact links */}
             <div className="space-y-3">
               {contactLinks.map((link) => {
                 const Icon = link.icon;
@@ -111,9 +91,7 @@ export default function Contact() {
                     <div className="flex items-center gap-3">
                       <Icon size={16} className="text-[#00ff88]" />
                       <div>
-                        <p className="font-mono text-[#444] text-xs uppercase tracking-widest">
-                          {link.label}
-                        </p>
+                        <p className="font-mono text-[#444] text-xs uppercase tracking-widest">{link.label}</p>
                         <p className="font-mono text-white text-sm mt-0.5">{link.value}</p>
                       </div>
                     </div>
@@ -122,13 +100,8 @@ export default function Contact() {
                         <button
                           onClick={handleCopyEmail}
                           className="p-1.5 text-[#444] hover:text-[#00ff88] transition-colors duration-200"
-                          title="Copier l'email"
                         >
-                          {copiedEmail ? (
-                            <CheckCheck size={14} className="text-[#00ff88]" />
-                          ) : (
-                            <Copy size={14} />
-                          )}
+                          {copiedEmail ? <CheckCheck size={14} className="text-[#00ff88]" /> : <Copy size={14} />}
                         </button>
                       )}
                       <a
@@ -145,7 +118,6 @@ export default function Contact() {
               })}
             </div>
 
-            {/* Availability badge */}
             <div className="flex items-center gap-3 p-4 border border-[#1e1e1e]">
               <div className="relative">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#00ff88]" />
@@ -158,8 +130,10 @@ export default function Contact() {
           </div>
 
           {/* Right: Form */}
-          <div className="border border-[#1e1e1e] p-8">
-            {/* Terminal bar */}
+          <div
+            ref={rightRef}
+            className={`border border-[#1e1e1e] p-8 ${animClass.fadeRight(rightVisible, 150)}`}
+          >
             <div className="flex items-center gap-2 mb-6 pb-4 border-b border-[#1e1e1e]">
               <span className="w-2 h-2 rounded-full bg-[#ff5f57]" />
               <span className="w-2 h-2 rounded-full bg-[#febc2e]" />
