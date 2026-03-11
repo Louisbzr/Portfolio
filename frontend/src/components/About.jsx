@@ -1,0 +1,102 @@
+import React from "react";
+import { Gamepad2, Globe, Cpu } from "lucide-react";
+import { portfolioData } from "../mock";
+
+const { about } = portfolioData;
+
+export default function About() {
+  return (
+    <section id="about" className="py-28 bg-[#0d0d0d] relative">
+      {/* Section separator line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1e1e1e] to-transparent" />
+
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Section header */}
+        <div className="flex items-center gap-4 mb-16">
+          <span className="font-mono text-[#00ff88] text-sm">02.</span>
+          <h2 className="font-mono text-3xl font-bold text-white">À propos</h2>
+          <div className="flex-1 h-px bg-[#1e1e1e] max-w-xs" />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-16 items-start">
+          {/* Left: Text */}
+          <div className="space-y-5">
+            {about.paragraphs.map((p, i) => (
+              <p key={i} className="text-[#888888] leading-relaxed text-base">
+                {p}
+              </p>
+            ))}
+
+            {/* Tags */}
+            <div className="flex flex-wrap gap-2 pt-4">
+              {["JavaScript", "React", "Node.js", "PostgreSQL", "Open Source"].map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 border border-[#1e1e1e] text-[#00ff88] font-mono text-xs hover:border-[#00ff88] transition-colors duration-200"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: Stats + interests */}
+          <div className="space-y-6">
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-4">
+              {about.stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="border border-[#1e1e1e] p-4 hover:border-[#00ff88] transition-colors duration-200 group"
+                >
+                  <div className="font-mono text-3xl font-black text-[#00ff88] group-hover:text-white transition-colors duration-200">
+                    {stat.value}
+                  </div>
+                  <div className="font-mono text-[#555] text-xs mt-1 leading-tight">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Interests */}
+            <div className="border border-[#1e1e1e] p-6 space-y-4">
+              <p className="font-mono text-[#444] text-xs uppercase tracking-widest">
+                &gt; Centres d'intérêt
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <Gamepad2 size={16} className="text-[#00ff88] mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-white font-mono text-sm">Jeux Vidéo</p>
+                    <p className="text-[#555] text-xs mt-0.5">
+                      Passion qui nourrit ma créativité dans le développement
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Globe size={16} className="text-[#00ff88] mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-white font-mono text-sm">Open Source</p>
+                    <p className="text-[#555] text-xs mt-0.5">
+                      Contribution à la communauté et partage de connaissances
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Cpu size={16} className="text-[#00ff88] mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-white font-mono text-sm">Nouvelles Technologies</p>
+                    <p className="text-[#555] text-xs mt-0.5">
+                      Veille tech permanente et expérimentation
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
