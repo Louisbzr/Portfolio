@@ -17,6 +17,7 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api/contact', async (req, res) => {
+  console.log('Body reçu:', req.body);
   const { name, email, message } = req.body;
 
   if (!name || name.length < 2 || name.length > 100) {
