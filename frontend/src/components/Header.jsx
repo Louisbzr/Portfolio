@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Menu, Code2, Sun, Moon } from "lucide-react";
-import { useTheme } from "../context/ThemeContext";
 import { Menu, X, Code2, Sun, Moon } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 const navLinks = [
   { label: "Accueil", href: "#hero" },

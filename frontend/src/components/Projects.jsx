@@ -19,20 +19,10 @@ function ProjectCard({ project, idx }) {
   const { isDark } = useTheme();
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
-  // En light mode + hover → fond vert → tout le texte doit être blanc
   const onGreen = hovered && !isDark;
 
-  // Helpers de couleur : si onGreen, blanc forcé via style inline (bat toujours le CSS)
   const col = (darkColor, lightColor) => ({
     color: onGreen ? "#ffffff" : isDark ? darkColor : lightColor,
-  });
-
-  const borderCol = (darkColor, lightColor) => ({
-    borderColor: onGreen ? "#ffffff" : isDark ? darkColor : lightColor,
-  });
-
-  const bgCol = (darkBg, lightBg) => ({
-    backgroundColor: onGreen ? "rgba(255,255,255,0.15)" : isDark ? darkBg : lightBg,
   });
 
   return (
@@ -42,36 +32,31 @@ function ProjectCard({ project, idx }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         borderColor: hovered ? (isDark ? "#00ff88" : onGreen ? "#ffffff" : "#008844") : isDark ? "#1e1e1e" : "#dddbd4",
-        backgroundColor: hovered
-          ? isDark
-            ? "rgba(0,255,136,0.03)"
-            : "rgba(0,136,68,1)"
-          : "transparent",
+        backgroundColor: hovered ? (isDark ? "rgba(0,255,136,0.03)" : "rgba(0,136,68,1)") : "transparent",
         transition: "background-color 0.3s ease, border-color 0.3s ease",
       }}
-      className={`border ${animClass.fadeUp(isVisible, idx * 100)}`}
+      className={"border " + animClass.fadeUp(isVisible, idx * 100)}
     >
-      {/* Terminal header bar */}
       <div
         style={{
           borderBottomColor: onGreen ? "rgba(255,255,255,0.3)" : isDark ? "#1e1e1e" : "#dddbd4",
           backgroundColor: onGreen ? "rgba(0,0,0,0.15)" : isDark ? "#111" : "#f0ede6",
           transition: "background-color 0.3s ease, border-color 0.3s ease",
         }}
-        className="flex items-center justify-between px-6 py-3 border-b"
+        className="flex items-center justify-between px-4 md:px-6 py-3 border-b"
       >
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#ff5f57]" />
-          <span className="w-2 h-2 rounded-full bg-[#febc2e]" />
-          <span className="w-2 h-2 rounded-full bg-[#28c840]" />
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="w-2 h-2 rounded-full bg-[#ff5f57] shrink-0" />
+          <span className="w-2 h-2 rounded-full bg-[#febc2e] shrink-0" />
+          <span className="w-2 h-2 rounded-full bg-[#28c840] shrink-0" />
           <span
             style={col("#444444", "#999999")}
-            className="ml-3 font-mono text-xs"
+            className="ml-3 font-mono text-xs truncate max-w-[140px] sm:max-w-none"
           >
-            ~/projects/{project.title.toLowerCase().replace(/ /g, "-")}
+            {"~/projects/" + project.title.toLowerCase().replace(/ /g, "-")}
           </span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="hidden sm:flex items-center gap-3 shrink-0">
           {project.featured && (
             <div className="flex items-center gap-1">
               <Star size={12} className="text-[#febc2e]" />
@@ -90,13 +75,23 @@ function ProjectCard({ project, idx }) {
             {project.status}
           </Badge>
         </div>
+        <div className="flex sm:hidden items-center gap-2 shrink-0 ml-2">
+          <Badge
+            variant="outline"
+            style={{
+              borderColor: onGreen ? "#ffffff" : "#28c840",
+              color: onGreen ? "#ffffff" : "#28c840",
+              backgroundColor: "transparent",
+            }}
+            className="font-mono text-xs px-2 py-0 rounded-none"
+          >
+            {project.status}
+          </Badge>
+        </div>
       </div>
 
-      {/* Content */}
-      <div className="p-8">
-        <div className="grid md:grid-cols-3 gap-8">
-
-          {/* LEFT COLUMN */}
+      <div className="p-4 md:p-8">
+        <div className="grid md:grid-cols-3 gap-4 md:gap-8">
           <div className="md:col-span-2 space-y-5">
             <div>
               <div className="flex items-center gap-3 mb-2">
@@ -106,7 +101,7 @@ function ProjectCard({ project, idx }) {
                 />
                 <h3
                   style={col("#ffffff", "#1a1a1a")}
-                  className="font-mono text-2xl font-bold"
+                  className="font-mono text-xl md:text-2xl font-bold"
                 >
                   {project.title}
                 </h3>
@@ -117,6 +112,12 @@ function ProjectCard({ project, idx }) {
                   {project.year}
                 </span>
               </div>
+              {project.featured && (
+                <div className="flex sm:hidden items-center gap-1 ml-7 mb-2">
+                  <Star size={12} className="text-[#febc2e]" />
+                  <span className="font-mono text-[#febc2e] text-xs">Projet phare</span>
+                </div>
+              )}
             </div>
 
             <p style={col("#888888", "#555555")} className="leading-relaxed text-sm ml-7">
@@ -128,7 +129,7 @@ function ProjectCard({ project, idx }) {
                 style={col("#444444", "#999999")}
                 className="font-mono text-xs uppercase tracking-widest mb-3"
               >
-                &gt; Fonctionnalités
+                {">"} Fonctionnalites
               </p>
               {project.features.map((f) => (
                 <div key={f} className="flex items-center gap-2">
@@ -159,7 +160,6 @@ function ProjectCard({ project, idx }) {
             </div>
           </div>
 
-          {/* RIGHT COLUMN */}
           <div className="flex flex-col justify-between gap-4">
             <div
               style={{
@@ -176,7 +176,6 @@ function ProjectCard({ project, idx }) {
             </div>
 
             <div className="flex flex-col gap-3">
-              {/* Voir la démo */}
               <a
                 href={project.demoUrl || "https://pokemorpho.com"}
                 target="_blank"
@@ -189,10 +188,9 @@ function ProjectCard({ project, idx }) {
                 className="flex items-center justify-center gap-2 px-4 py-3 font-mono font-bold text-sm transition-colors duration-200 border"
               >
                 <ExternalLink size={14} />
-                Voir la démo
+                Voir la demo
               </a>
 
-              {/* Voir le GitHub */}
               <a
                 href={project.githubUrl || "https://github.com/Louisbzr"}
                 target="_blank"
@@ -209,7 +207,6 @@ function ProjectCard({ project, idx }) {
               </a>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -230,14 +227,14 @@ export default function Projects() {
       <div
         className="absolute top-0 left-0 right-0 h-px"
         style={{
-          background: `linear-gradient(to right, transparent, ${theme.border}, transparent)`,
+          background: "linear-gradient(to right, transparent, " + theme.border + ", transparent)",
         }}
       />
 
       <div className="max-w-6xl mx-auto px-6">
         <div
           ref={titleRef}
-          className={`flex items-center gap-4 mb-16 ${animClass.fadeUp(titleVisible)}`}
+          className={"flex items-center gap-4 mb-16 " + animClass.fadeUp(titleVisible)}
         >
           <span
             className="font-mono text-sm"
@@ -265,7 +262,7 @@ export default function Projects() {
 
         <div className="mt-12 text-center">
           <p className="font-mono text-sm" style={{ color: theme.dim }}>
-            &gt; Plus de projets sur{" "}
+            {">"} Plus de projets sur{" "}
             <a
               href="https://github.com/Louisbzr"
               target="_blank"
