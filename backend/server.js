@@ -17,7 +17,6 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api/contact', async (req, res) => {
-  console.log('Body reçu:', req.body);
   const { name, email, message } = req.body;
 
   if (!name || name.length < 2 || name.length > 100) {
@@ -31,14 +30,11 @@ app.post('/api/contact', async (req, res) => {
   }
 
   try {
-    console.log('Sauvegarde en base...');
     const contact = await prisma.contact.create({
       data: { name, email, message },
     });
-    console.log('Contact créé:', contact);
 
-     console.log('Envoi email Resend...');
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: process.env.GMAIL_USER,
       subject: `📬 Nouveau message de ${name}`,
@@ -54,7 +50,6 @@ app.post('/api/contact', async (req, res) => {
         <small>Reçu le ${new Date().toLocaleString('fr-FR')} — Portfolio Louis</small>
       `,
     });
-    console.log('Résultat Resend:', result);
 
     res.status(201).json(contact);
   } catch (err) {
