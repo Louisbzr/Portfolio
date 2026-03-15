@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { PrismaClient } = require('@prisma/client');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app = express();
 const prisma = new PrismaClient();
@@ -15,15 +16,13 @@ app.use(express.json());
 
 // ─── Nodemailer setup ──────────────────────────────────────────────────────────
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
+await resend.emails.send({
+  from: 'onboarding@resend.dev',
+  to: process.env.GMAIL_USER,
+  subject: `📬 Nouveau message de ${name}`,
+  html: `...ton html...`,
 });
+
 // ─── Routes ────────────────────────────────────────────────────────────────────
 
 // Health check
