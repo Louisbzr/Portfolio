@@ -37,7 +37,7 @@ export default function Footer() {
                 <Terminal size={14} className="text-[#0d0d0d]" />
               </div>
               <span className="font-mono text-white font-bold">
-                louis<span className="text-[#00ff88]">.</span>dev
+                louis<span className="text-[#00ff88]">.</span>brazeau
               </span>
             </div>
             <p className="font-mono text-[#444] text-xs leading-relaxed max-w-[220px]">
@@ -102,11 +102,11 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="flex items-center justify-between pt-8 border-t border-[#1a1a1a]">
           <p className="font-mono text-[#333] text-xs">
-            &copy; {new Date().getFullYear()} Louis — Tous droits réservés
+            &copy; {new Date().getFullYear()} Louis Brazeau— Tous droits réservés
           </p>
           <div className="flex items-center gap-6">
             <p className="font-mono text-[#333] text-xs hidden sm:block">
-              Built with React + TailwindCSS
+              
             </p>
             <button
               onClick={scrollTop}

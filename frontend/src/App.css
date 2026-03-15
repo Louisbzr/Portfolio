@@ -296,3 +296,11 @@ html {
 :root.light-theme .animate-pulse {
   transition: none !important;
 }
+
+.light-mode [data-ongreen="true"],
+.light-mode [data-ongreen="true"] *,
+:root.light-theme [data-ongreen="true"],
+:root.light-theme [data-ongreen="true"] * {
+  color: #ffffff !important;
+  transition: none !important;
+}

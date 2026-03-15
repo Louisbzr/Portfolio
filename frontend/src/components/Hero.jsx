@@ -85,7 +85,7 @@ export default function Hero() {
           <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
           <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
           <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
-          <span className="ml-3 font-mono text-[#444] text-xs">~/portfolio — louis@dev:~$</span>
+          <span className="ml-3 font-mono text-[#444] text-xs">~/portfolio — louis.brazeau@dev:~$</span>
         </div>
 
         <div className="space-y-6">
@@ -155,14 +155,8 @@ export default function Hero() {
               <Mail size={20} />
             </a>
             <div className="h-px bg-[#222] w-16" />
-            <span className="font-mono text-[#333] text-xs">@louis-dev</span>
+            <span className="font-mono text-[#333] text-xs">@louis.brazeau.pro</span>
           </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-6 flex flex-col items-center gap-2">
-          <span className="font-mono text-[#333] text-xs rotate-90 mb-1">scroll</span>
-          <div className="w-px h-16 bg-gradient-to-b from-[#00ff88] to-transparent" />
         </div>
       </div>
     </section>

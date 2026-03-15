@@ -87,6 +87,15 @@ const LIGHT_CSS = `
 [data-theme="light"] .animate-ping,
 [data-theme="light"] .animate-spin,
 [data-theme="light"] .animate-pulse { transition: none !important; }
+
+/* ── Éléments sur fond vert au hover (ex: project cards) ── */
+/* Ces règles sont APRÈS toutes les autres → elles gagnent à spécificité égale */
+[data-theme="light"] [data-ongreen="true"] [class*="text-"],
+[data-theme="light"] [data-ongreen="true"] [class*="text-white"],
+[data-theme="light"] [data-ongreen="true"] {
+  color: #ffffff !important;
+  transition: none !important;
+}
 `;
 
 export function ThemeProvider({ children }) {

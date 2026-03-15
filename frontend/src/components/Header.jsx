@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X, Terminal, Code2, Sun, Moon } from "lucide-react";
+import { Menu, Code2, Sun, Moon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 
 const navLinks = [
@@ -75,11 +75,13 @@ export default function Header() {
           onClick={(e) => handleNavClick(e, "#hero")}
           className="flex items-center gap-2 group"
         >
-          <div className={`w-8 h-8 flex items-center justify-center ${isDark ? "bg-[#00ff88]" : "bg-[#008844]"}`}>
-            <Terminal size={16} className="text-white" style={{ color: isDark ? "#0d0d0d" : "#ffffff" }} />
-          </div>
+          <img
+            src="/logo.png"
+            alt="Logo"
+            className="w-8 h-8"
+          />
           <span className={`font-mono font-bold text-lg tracking-tight transition-colors duration-200 ${logoTextColor} group-hover:${accentColor}`}>
-            louis<span className={accentColor}>.</span>dev
+            louis<span className={accentColor}>.</span>brazeau
           </span>
         </a>
 

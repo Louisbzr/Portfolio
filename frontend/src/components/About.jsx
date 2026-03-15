@@ -43,7 +43,7 @@ export default function About() {
 
             {/* Tags */}
             <div className={`flex flex-wrap gap-2 pt-4 ${animClass.fadeUp(leftVisible, 300)}`}>
-              {["JavaScript", "React", "Node.js", "PostgreSQL", "Open Source"].map((tag) => (
+              {["JavaScript", "React", "Node.js", "PostgreSQL", "Supabase", "Render", , "Vercel"].map((tag) => (
                 <span
                   key={tag}
                   className="px-3 py-1 border border-[#1e1e1e] text-[#00ff88] font-mono text-xs hover:border-[#00ff88] transition-colors duration-200"

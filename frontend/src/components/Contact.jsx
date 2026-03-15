@@ -14,8 +14,8 @@ const { personal } = portfolioData;
 
 const contactLinks = [
   { label: "Email", value: personal.email, href: `mailto:${personal.email}`, icon: Mail, copyable: true },
-  { label: "GitHub", value: "github.com/louis-dev", href: personal.github, icon: Github, copyable: false },
-  { label: "LinkedIn", value: "linkedin.com/in/louis-dev", href: personal.linkedin, icon: Linkedin, copyable: false },
+  { label: "GitHub", value: "github.com/louis", href: personal.github, icon: Github, copyable: false },
+  { label: "LinkedIn", value: "linkedin.com/in/louis", href: personal.linkedin, icon: Linkedin, copyable: false },
 ];
 
 export default function Contact() {
@@ -173,7 +173,9 @@ export default function Contact() {
                     onChange={handleChange}
                     placeholder="Votre nom"
                     required
-                    className="bg-[#111] border-[#1e1e1e] text-white font-mono placeholder:text-[#333] focus:border-[#00ff88] focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none"
+                    className={`border font-mono placeholder:text-[#999] focus:border-[#00ff88] focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none ${
+                      isDark ? "bg-[#111] border-[#1e1e1e] text-white placeholder:text-[#333]" : "bg-white border-[#dddbd4] text-[#1a1a1a]"
+                    }`}
                   />
                 </div>
                 <div>
@@ -187,7 +189,9 @@ export default function Contact() {
                     onChange={handleChange}
                     placeholder="votre@email.com"
                     required
-                    className="bg-[#111] border-[#1e1e1e] text-white font-mono placeholder:text-[#333] focus:border-[#00ff88] focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none"
+                    className={`border font-mono placeholder:text-[#999] focus:border-[#00ff88] focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none ${
+                      isDark ? "bg-[#111] border-[#1e1e1e] text-white placeholder:text-[#333]" : "bg-white border-[#dddbd4] text-[#1a1a1a]"
+                    }`}
                   />
                 </div>
                 <div>
@@ -201,7 +205,9 @@ export default function Contact() {
                     placeholder="Votre message..."
                     rows={5}
                     required
-                    className="bg-[#111] border-[#1e1e1e] text-white font-mono placeholder:text-[#333] focus:border-[#00ff88] focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none resize-none"
+                    className={`border font-mono placeholder:text-[#999] focus:border-[#00ff88] focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none ${
+                      isDark ? "bg-[#111] border-[#1e1e1e] text-white placeholder:text-[#333]" : "bg-white border-[#dddbd4] text-[#1a1a1a]"
+                    }`}     
                   />
                 </div>
                 <button
