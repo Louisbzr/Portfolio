@@ -3,38 +3,22 @@ const express = require('express');
 const cors = require('cors');
 const { PrismaClient } = require('@prisma/client');
 const { Resend } = require('resend');
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app = express();
 const prisma = new PrismaClient();
+const resend = new Resend(process.env.RESEND_API_KEY);
 const PORT = process.env.PORT || 5000;
-
-// ─── Middleware ────────────────────────────────────────────────────────────────
 
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 
-// ─── Nodemailer setup ──────────────────────────────────────────────────────────
-
-await resend.emails.send({
-  from: 'onboarding@resend.dev',
-  to: process.env.GMAIL_USER,
-  subject: `📬 Nouveau message de ${name}`,
-  html: `...ton html...`,
-});
-
-// ─── Routes ────────────────────────────────────────────────────────────────────
-
-// Health check
 app.get('/api', (req, res) => {
   res.json({ message: 'Portfolio Louis API — Online ✓', status: 'ok' });
 });
 
-// POST /api/contact — Créer un message + envoyer un email
 app.post('/api/contact', async (req, res) => {
   const { name, email, message } = req.body;
 
-  // Validation basique
   if (!name || name.length < 2 || name.length > 100) {
     return res.status(400).json({ error: 'Nom invalide (2-100 caractères)' });
   }
@@ -46,14 +30,12 @@ app.post('/api/contact', async (req, res) => {
   }
 
   try {
-    // Sauvegarder en base
     const contact = await prisma.contact.create({
       data: { name, email, message },
     });
 
-    // Envoyer l'email de notification
-    await transporter.sendMail({
-      from: `"Portfolio Contact" <${process.env.GMAIL_USER}>`,
+    await resend.emails.send({
+      from: 'onboarding@resend.dev',
       to: process.env.GMAIL_USER,
       subject: `📬 Nouveau message de ${name}`,
       html: `
@@ -76,7 +58,6 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// GET /api/contact — Lister tous les messages
 app.get('/api/contact', async (req, res) => {
   try {
     const contacts = await prisma.contact.findMany({
@@ -89,7 +70,6 @@ app.get('/api/contact', async (req, res) => {
   }
 });
 
-// PATCH /api/contact/:id/read — Marquer comme lu
 app.patch('/api/contact/:id/read', async (req, res) => {
   const { id } = req.params;
   try {
@@ -106,8 +86,6 @@ app.patch('/api/contact/:id/read', async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur' });
   }
 });
-
-// ─── Start ─────────────────────────────────────────────────────────────────────
 
 app.listen(PORT, () => {
   console.log(`✅ Serveur démarré sur http://localhost:${PORT}`);
