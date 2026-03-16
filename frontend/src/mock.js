@@ -164,7 +164,7 @@ export const portfolioData = {
         "Profil stats (boards, cards, checklists, tags, overdue alerts)",
       ],
       demoUrl: "https://study-board-nine.vercel.app/",
-      githubUrl: "https://github.com/Louisbzr/StudyBoard",
+      githubUrl: "https://github.com/Louisbzr/StudyBoard/tree/master",
       featured: true,
       status: "V1 Terminée",
       year: "2025",
